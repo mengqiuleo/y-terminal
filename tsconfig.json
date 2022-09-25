@@ -17,11 +17,11 @@
       "@/*": ["src/*"]
     }
   },
-  "ts-node": {
-    "compilerOptions": {
-      "module": "CommonJS"
-    }
-  },
+  // "ts-node": {
+  //   "compilerOptions": {
+  //     "module": "CommonJS"
+  //   }
+  // },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
