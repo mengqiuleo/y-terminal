@@ -1,7 +1,7 @@
 /*
  * @Author: Pan Jingyi
  * @Date: 2022-09-25 17:45:42
- * @LastEditTime: 2022-09-25 20:42:51
+ * @LastEditTime: 2022-09-25 23:47:43
  */
 module.exports = {
     "env": {
@@ -32,6 +32,8 @@ module.exports = {
         'no-undef': 'off',
         'prefer-const': 'off',
         'no-useless-escape': 'off',
-        '@typescript-eslint/ban-ts-comment': 'off'
+        '@typescript-eslint/ban-ts-comment': 'off',
+        '@typescript-eslint/no-unused-vars': 'off',
+        '@typescript-eslint/no-empty-function': 'off'
     }
 }
