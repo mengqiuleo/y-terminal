@@ -6,7 +6,7 @@
 import { createApp } from 'vue'
 import './style.css'
 import App from './App.vue'
-import * as VueRouter from "vue-router"
+import * as VueRouter from 'vue-router'
 import routes from './config/routes'
 
 const app = createApp(App)
@@ -14,8 +14,8 @@ const app = createApp(App)
 // 路由
 const router = VueRouter.createRouter({
   history: VueRouter.createWebHashHistory(),
-  routes,
-});
-app.use(router);
+  routes
+})
+app.use(router)
 
 app.mount('#app')

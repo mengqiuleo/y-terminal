@@ -1,13 +1,13 @@
-const MyError = require("../exception");
+const MyError = require('../exception')
 const {
   REQUEST_PARAMS_ERROR_CODE,
-  NO_AUTH_ERROR_CODE,
-} = require("../exception/errorCode");
+  NO_AUTH_ERROR_CODE
+} = require('../exception/errorCode')
 const {
   userLogin,
   userRegister,
-  getLoginUser,
-} = require("../service/userService");
+  getLoginUser
+} = require('../service/userService')
 
 /**
  * 用户注册
@@ -16,11 +16,11 @@ const {
  * @param res
  */
 async function userRegisterApi(event, req, res) {
-  const { username, password, email } = event;
+  const { username, password, email } = event
   if (!username || !password || !email) {
-    throw new MyError(REQUEST_PARAMS_ERROR_CODE, "参数错误");
+    throw new MyError(REQUEST_PARAMS_ERROR_CODE, '参数错误')
   }
-  return await userRegister(username, password, email);
+  return await userRegister(username, password, email)
 }
 
 /**
@@ -30,11 +30,11 @@ async function userRegisterApi(event, req, res) {
  * @param res
  */
 async function userLoginApi(event, req, res) {
-  const { username, password } = event;
+  const { username, password } = event
   if (!username || !password) {
-    throw new MyError(REQUEST_PARAMS_ERROR_CODE, "参数错误");
+    throw new MyError(REQUEST_PARAMS_ERROR_CODE, '参数错误')
   }
-  return await userLogin(username, password, req);
+  return await userLogin(username, password, req)
 }
 
 /**
@@ -45,10 +45,10 @@ async function userLoginApi(event, req, res) {
  */
 function userLogoutApi(event, req, res) {
   if (!req.session.userInfo) {
-    throw new MyError(NO_AUTH_ERROR_CODE, "未登录");
+    throw new MyError(NO_AUTH_ERROR_CODE, '未登录')
   }
-  delete req.session.userInfo;
-  return true;
+  delete req.session.userInfo
+  return true
 }
 
 /**
@@ -58,12 +58,12 @@ function userLogoutApi(event, req, res) {
  * @param res
  */
 async function getLoginUserApi(event, req, res) {
-  return await getLoginUser(req);
+  return await getLoginUser(req)
 }
 
 module.exports = {
   userRegisterApi,
   userLoginApi,
   getLoginUserApi,
-  userLogoutApi,
-};
+  userLogoutApi
+}

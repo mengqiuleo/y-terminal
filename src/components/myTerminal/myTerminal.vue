@@ -8,7 +8,7 @@
   </div>
 </template>
 
-<script lang='ts'>
+<script lang="ts">
 import { defineComponent } from 'vue'
 export default defineComponent({
   name: 'App',
@@ -17,4 +17,4 @@ export default defineComponent({
   }
 })
 </script>
-<style lang='' scoped></style>
+<style lang="" scoped></style>

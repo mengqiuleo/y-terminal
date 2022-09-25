@@ -1,9 +1,9 @@
-const { translate } = require("../thirdpart/baiduFanYi/baiduFanYiApi");
-const MyError = require("../exception");
+const { translate } = require('../thirdpart/baiduFanYi/baiduFanYiApi')
+const MyError = require('../exception')
 const {
   REQUEST_PARAMS_ERROR_CODE,
-  THIRD_PART_SERVICE_ERROR_CODE,
-} = require("../exception/errorCode");
+  THIRD_PART_SERVICE_ERROR_CODE
+} = require('../exception/errorCode')
 
 /**
  * 翻译
@@ -12,17 +12,17 @@ const {
  * @param res
  */
 async function translateApi(event, req, res) {
-  const { keywords, config } = event;
+  const { keywords, config } = event
   if (!keywords) {
-    throw new MyError(REQUEST_PARAMS_ERROR_CODE, "请输入关键词");
+    throw new MyError(REQUEST_PARAMS_ERROR_CODE, '请输入关键词')
   }
-  const result = await translate(keywords, config);
+  const result = await translate(keywords, config)
   if (!result) {
-    throw new MyError(THIRD_PART_SERVICE_ERROR_CODE);
+    throw new MyError(THIRD_PART_SERVICE_ERROR_CODE)
   }
-  return result;
+  return result
 }
 
 module.exports = {
-  translateApi,
-};
+  translateApi
+}

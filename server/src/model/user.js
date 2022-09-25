@@ -1,47 +1,47 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("../db");
+const { DataTypes } = require('sequelize')
+const sequelize = require('../db')
 
 /**
  * 用户模型
  * @author yupi
  */
 const UserModel = sequelize.define(
-  "User",
+  'User',
   {
     id: {
       type: DataTypes.BIGINT,
       autoIncrement: true,
-      primaryKey: true,
+      primaryKey: true
     },
     // Model attributes are defined here
     username: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
     },
     password: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
     },
     email: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING
     },
     status: {
       type: DataTypes.INTEGER,
-      defaultValue: 0,
+      defaultValue: 0
     },
     createTime: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATE
     },
     updateTime: {
-      type: DataTypes.DATE,
-    },
+      type: DataTypes.DATE
+    }
   },
   {
-    tableName: "user",
+    tableName: 'user',
     paranoid: true,
-    deletedAt: "isDelete",
-    timestamps: false,
+    deletedAt: 'isDelete',
+    timestamps: false
   }
-);
+)
 
-module.exports = UserModel;
+module.exports = UserModel

@@ -2,7 +2,7 @@
  * 网站域名
  * @type {string}
  */
-const WEB_HOST = "https://yuindex.com";
+const WEB_HOST = 'https://yuindex.com'
 
 /**
  * 查询简略用户信息需要的字段
@@ -19,10 +19,10 @@ const SIMPLE_USER_FIELDS = {
   jobStatus: true,
   interests: true,
   title: true,
-  _createTime: true,
-};
+  _createTime: true
+}
 
 module.exports = {
   SIMPLE_USER_FIELDS,
-  WEB_HOST,
-};
+  WEB_HOST
+}

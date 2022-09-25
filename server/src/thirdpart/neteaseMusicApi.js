@@ -1,4 +1,4 @@
-const { cloudsearch, playlist_detail } = require("NeteaseCloudMusicApi");
+const { cloudsearch, playlist_detail } = require('NeteaseCloudMusicApi')
 
 /**
  * 搜索音乐
@@ -8,22 +8,22 @@ const { cloudsearch, playlist_detail } = require("NeteaseCloudMusicApi");
  */
 async function searchMusics(keywords, limit = 10) {
   if (!keywords) {
-    return [];
+    return []
   }
   try {
     const result = await cloudsearch({
       keywords,
       type: 1,
-      limit,
-    });
+      limit
+    })
     if (result.status !== 200) {
-      return [];
+      return []
     }
-    const songs = result.body.result.songs;
-    return songs ? songs : [];
+    const songs = result.body.result.songs
+    return songs ? songs : []
   } catch (error) {
-    console.log(error);
-    return [];
+    console.log(error)
+    return []
   }
 }
 
@@ -33,14 +33,14 @@ async function searchMusics(keywords, limit = 10) {
  */
 async function playlistDetail() {
   // 热歌榜 id
-  const HOT_SONGS_PLAY_LIST_ID = 3778678;
+  const HOT_SONGS_PLAY_LIST_ID = 3778678
   const result = await playlist_detail({
-    id: HOT_SONGS_PLAY_LIST_ID,
-  });
-  return result.body.playlist.tracks;
+    id: HOT_SONGS_PLAY_LIST_ID
+  })
+  return result.body.playlist.tracks
 }
 
 module.exports = {
   searchMusics,
-  playlistDetail,
-};
+  playlistDetail
+}

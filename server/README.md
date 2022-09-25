@@ -56,7 +56,7 @@ dbConfig: {
 2）安装依赖：
 
 ```
-npm i 
+npm i
 ```
 
 3）启动服务：
@@ -145,4 +145,3 @@ CMD pm2-runtime 'npm start'
 - Dockerfile 镜像构建
 - package.json 项目依赖文件
 - yarn.lock 依赖锁定
-
