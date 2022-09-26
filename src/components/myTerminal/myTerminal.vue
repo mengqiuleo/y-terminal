@@ -1,15 +1,17 @@
 <template>
   <div
-    class="yu-terminal-wrapper"
+    class="yi-terminal-wrapper"
     :style="wrapperStyle"
     @click="handleClickWrapper"
   >
-    <div ref="terminalRef" class="yu-terminal" :style="mainStyle">
+    <!-- 上面的handleClickWrapper是文本聚焦，不是换壁纸 -->
+    <div ref="terminalRef" class="yi-terminal" :style="mainStyle">
       <a-collapse
         v-model:activeKey="activeKeys"
         :bordered="false"
         expand-icon-position="right"
       >
+        <!-- 折叠图标放在右边 -->
         <template v-for="(output, index) in outputList" :key="index">
           <!-- 折叠 -->
           <a-collapse-panel
@@ -17,12 +19,16 @@
             :key="index"
             class="terminal-row"
           >
+            <!-- 这个header就是[local]$ + 你以前输入的某个命令 -->
             <template #header>
+              <!-- prompt 是 [local]$ -->
               <span style="user-select: none; margin-right: 10px">
                 {{ prompt }}
               </span>
+              <!-- output.text就是一条历史命令，比如history,hot,clear -->
               <span>{{ output.text }}</span>
             </template>
+            <!-- 下面是对某条历史命令的返回结果列表进行输出，注意是某条命令 -->
             <div
               v-for="(result, idx) in output.resultList"
               :key="idx"
@@ -34,6 +40,7 @@
           <!-- 不折叠 -->
           <template v-else>
             <!-- 输出命令及结果-->
+            <!-- 这里的第一个div就相当于上面的#header模板，而这里的template就是上面的a-collapse-panel标签 -->
             <template v-if="output.type === 'command'">
               <div class="terminal-row">
                 <span style="user-select: none; margin-right: 10px">{{
@@ -58,6 +65,7 @@
           </template>
         </template>
       </a-collapse>
+      <!-- 输入框 -->
       <div class="terminal-row">
         <a-input
           ref="commandInputRef"
@@ -69,6 +77,7 @@
           autofocus
           @press-enter="doSubmitCommand"
         >
+          <!-- 这个template用来展示 [local]$ ,去掉后就没有了, prompt的值就是[local]$ -->
           <template #addonBefore>
             <span class="command-input-prompt">{{ prompt }}</span>
           </template>
@@ -84,220 +93,247 @@
 </template>
 
 <script setup lang="ts">
-import {
-  computed,
-  onMounted,
-  ref,
-  StyleValue,
-  toRefs,
-  watchEffect,
-} from "vue";
+import { computed, onMounted, ref, StyleValue, toRefs, watchEffect } from 'vue'
 
-import CommandOutputType = YiTerminal.CommandOutputType;
-import OutputType = YiTerminal.OutputType;
-import CommandInputType = YiTerminal.CommandInputType;
-import { registerShortcuts } from "./shortcuts";
-import TerminalType = YiTerminal.TerminalType;
-import TextOutputType = YiTerminal.TextOutputType;
-import useHistory from "./history";
-import OutputStatusType = YiTerminal.OutputStatusType;
-import { useTerminalConfigStore } from "../../core/commands/terminal/config/terminalConfigStore";
-import { LOCAL_USER } from "./userConstant";
-import useHint from "./hint";
-import UserType = User.UserType;
+import CommandOutputType = YiTerminal.CommandOutputType //command命令类型输出(只是command这种类型输出)
+import OutputType = YiTerminal.OutputType //输出类型
+import CommandInputType = YiTerminal.CommandInputType //命令输入类型
+import { registerShortcuts } from './shortcuts' //快捷键
+import TerminalType = YiTerminal.TerminalType //终端类型
+import TextOutputType = YiTerminal.TextOutputType //文本类型输出
+import useHistory from './history'
+import OutputStatusType = YiTerminal.OutputStatusType //输出状态
+import { useTerminalConfigStore } from '../../core/commands/terminal/config/terminalConfigStore' //终端配置状态存储
+import { LOCAL_USER } from './userConstant' //本地用户
+import useHint from './hint' //命令提示
+import UserType = User.UserType
 
-interface YuTerminalProps {
-  height?: string | number;
-  fullScreen?: boolean;
-  user?: UserType;
+interface YiTerminalProps {
+  height?: string | number
+  fullScreen?: boolean
+  user?: UserType
   // eslint-disable-next-line vue/require-default-prop
-  onSubmitCommand?: (inputText: string) => void;
+  onSubmitCommand?: (inputText: string) => void
 }
 
-const props = withDefaults(defineProps<YuTerminalProps>(), {
-  height: "400px",
+const props = withDefaults(defineProps<YiTerminalProps>(), {
+  height: '400px',
   fullScreen: false,
-  user: LOCAL_USER as any,
-});
+  user: LOCAL_USER as any
+  // 用户弄成本地用户
+})
 
-const { user } = toRefs(props);
+//此时这个用户不仅有自己的相关信息(只不是因为我只设置了local用户，无法注册用户)，
+// 还有背景的相关信息
+const { user } = toRefs(props)
 
-const terminalRef = ref();
-const activeKeys = ref<number[]>([]);
-// 输出列表
-const outputList = ref<OutputType[]>([]);
-// 命令列表
-const commandList = ref<CommandOutputType[]>([]);
-const commandInputRef = ref();
+const terminalRef = ref() //代表整个终端的ref
+const activeKeys = ref<number[]>([])
+// 输出列表,是我们要进行遍历输出的列表
+const outputList = ref<OutputType[]>([])
+// 命令列表：记录已输入的命令，要不然我们怎么获取历史命令呢
+const commandList = ref<CommandOutputType[]>([])
+const commandInputRef = ref() //输入框的ref
 
 // 命令是否运行
-const isRunning = ref(false);
+// 根据命令是否运行来判断提示框要不要显示，还有就是控制不要让用户在命令执行时再次执行操作
+const isRunning = ref(false)
 
 // 引入终端配置状态
-const configStore = useTerminalConfigStore();
+const configStore = useTerminalConfigStore()
 
 /**
  * 初始命令
+ * 为什么要初始命令？我们要进行双向数据绑定，所以最开始的时候需要一个初始值
  */
 const initCommand: CommandInputType = {
-  text: "",
-  placeholder: "",
-};
+  text: '',
+  placeholder: ''
+}
 
 /**
  * 待输入的命令
+ * 双向数据绑定的，就是我们输入的命令
+ * 也就是说，我们输入啥，inputCommand里面就是啥
+ * 因为我们双向数据绑定的值是initCommand的值，所以我们给它包装一下类型，
+ * 将它变成代输入的命令inputCommand
  */
 const inputCommand = ref<CommandInputType>({
-  ...initCommand,
-});
+  ...initCommand
+})
+
+// 这里是测试我们输入的内容是否可以被监听到，text的值就是我们输入的东西 inputCommand.value.text
+console.log(inputCommand.value)
 
 /**
  * 全局记录当前命令，便于写入结果
+ * 这个只是一个变量而已,就相当于temp变量，只是暂时存储
  */
-let currentNewCommand: CommandOutputType;
+let currentNewCommand: CommandOutputType
 
 const {
   commandHistoryPos,
   showPrevCommand,
   showNextCommand,
-  listCommandHistory,
-} = useHistory(commandList.value, inputCommand);
+  listCommandHistory
+} = useHistory(commandList.value, inputCommand)
 
-const { hint, setHint, debounceSetHint } = useHint();
+const { hint, setHint, debounceSetHint } = useHint()
+
+// 下面全都是相关方法！！！
 
 /**
  * 提交命令（回车）
  */
 const doSubmitCommand = async () => {
-  isRunning.value = true;
-  setHint("");
-  let inputText = inputCommand.value.text;
-  // 执行某条历史命令
-  if (inputText.startsWith("!")) {
-    const commandIndex = Number(inputText.substring(1));
-    const command = commandList.value[commandIndex - 1];
+  isRunning.value = true
+  // 既然在执行命令，那就不要在输出命令提示了，所以输入空字符串，setHint函数输出的就是命令提示
+  setHint('')
+  let inputText = inputCommand.value.text //拿到命令输入的内容
+  // 使用！执行某条历史命令（这里是一个小的功能）
+  if (inputText.startsWith('!')) {
+    const commandIndex = Number(inputText.substring(1))
+    const command = commandList.value[commandIndex - 1]
     if (command) {
-      inputText = command.text;
+      inputText = command.text
     }
   }
-  // 执行命令
+  // 执行命令，将输入的字符串变成命令的类型
+  // 因为我们的命令都是定义了类型的,总不能把输入的字符串当成一个命令吧,所以首先要把它包装成一个命令类型
   const newCommand: CommandOutputType = {
     text: inputText,
-    type: "command",
-    resultList: [],
-  };
+    type: 'command',
+    resultList: []
+  }
   // 记录当前命令，便于写入结果
-  currentNewCommand = newCommand;
+  currentNewCommand = newCommand
   // 执行命令
-  await props.onSubmitCommand?.(inputText);
+  await props.onSubmitCommand?.(inputText)
   // 添加输出（为空也要输出换行）
-  outputList.value.push(newCommand);
+  outputList.value.push(newCommand)
   // 不为空字符串才算是有效命令
   if (inputText) {
-    commandList.value.push(newCommand);
+    // 把当前命令推入历史命令中
+    commandList.value.push(newCommand)
     // 重置当前要查看的命令位置
-    commandHistoryPos.value = commandList.value.length;
+    commandHistoryPos.value = commandList.value.length
   }
-  inputCommand.value = { ...initCommand };
+  inputCommand.value = { ...initCommand }
   // 默认展开折叠面板
-  activeKeys.value.push(outputList.value.length - 1);
+  activeKeys.value.push(outputList.value.length - 1)
   // 自动滚到底部
   setTimeout(() => {
-    terminalRef.value.scrollTop = terminalRef.value.scrollHeight;
-  }, 50);
-  isRunning.value = false;
-};
+    terminalRef.value.scrollTop = terminalRef.value.scrollHeight
+  }, 50)
+  isRunning.value = false
+}
 
-// 输入框内容改变时，触发输入提示
+/**
+ * 输入框内容改变时，触发输入提示
+ * 这个watch函数是vue自带的，就是用来监听
+ */
 watchEffect(() => {
-  debounceSetHint(inputCommand.value.text);
-});
+  debounceSetHint(inputCommand.value.text)
+})
 
 /**
  * 输入提示符
+ * 这里就是你输入的提示符的样子：默认是$
+ * 然后前面可以自己定制主机名,
+ * 这里为什么user有username这个属性，因为这个user是继承的定义的user类型
+ * ok
  */
 const prompt = computed(() => {
-  return `[${user.value.username}]$`;
-});
+  return `[${user.value.username}]$`
+})
 
 /**
  * 终端主样式
+ * 这里配置的是大写，是否全屏，主要是布局设置。
+ * 背景图片设置在下面
+ * ok
  */
 const mainStyle = computed(() => {
   const fullScreenStyle: StyleValue = {
-    position: "fixed",
+    position: 'fixed',
     top: 0,
     bottom: 0,
     left: 0,
-    right: 0,
-  };
+    right: 0
+  }
+  // 这里的props.fullScreen是我们拿ts写的自定义配置
   return props.fullScreen
     ? fullScreenStyle
     : {
-        height: props.height,
-      };
-});
+        height: props.height
+      }
+})
 
 /**
  * 终端包装类主样式
+ * 这里是背景图片设置
+ * ok
  */
 const wrapperStyle = computed(() => {
-  const { background } = configStore;
+  const { background } = configStore
   const style = {
-    ...mainStyle.value,
-  };
-  if (background.startsWith("http")) {
-    style.background = `url(${background})`;
-  } else {
-    style.background = background;
+    ...mainStyle.value
   }
-  return style;
-});
+  if (background.startsWith('http')) {
+    // 这里就是为什么我们可以自定义背景样式
+    style.background = `url(${background})`
+  } else {
+    style.background = background
+  }
+  return style
+})
 
 /**
  * 清空所有输出
  */
 const clear = () => {
-  outputList.value = [];
-};
+  outputList.value = []
+}
 
 /**
  * 写命令文本结果
+ * 这里就是我们输入命令后，输出的结果提示，是成功，失败...
  * @param text
  * @param status
  */
 const writeTextResult = (text: string, status?: OutputStatusType) => {
   const newOutput: TextOutputType = {
     text,
-    type: "text",
-    status,
-  };
-  currentNewCommand.resultList.push(newOutput);
-};
+    type: 'text',
+    status
+  }
+  // 上面我们不是将输入的命令包装成了一条命令并且将它赋值给了一个类似于temp的值吗，这里的currentNewCommand就是上面的temp
+  currentNewCommand.resultList.push(newOutput)
+}
 
 /**
  * 写文本错误状态结果
  * @param text
  */
 const writeTextErrorResult = (text: string) => {
-  writeTextResult(text, "error");
-};
+  writeTextResult(text, 'error')
+}
 
 /**
  * 写文本成功状态结果
  * @param text
  */
 const writeTextSuccessResult = (text: string) => {
-  writeTextResult(text, "success");
-};
+  writeTextResult(text, 'success')
+}
 
 /**
  * 写结果
  * @param output
  */
 const writeResult = (output: OutputType) => {
-  currentNewCommand.resultList.push(output);
-};
+  currentNewCommand.resultList.push(output)
+}
 
 /**
  * 立即输出文本
@@ -307,52 +343,52 @@ const writeResult = (output: OutputType) => {
 const writeTextOutput = (text: string, status?: OutputStatusType) => {
   const newOutput: TextOutputType = {
     text,
-    type: "text",
-    status,
-  };
-  outputList.value.push(newOutput);
-};
+    type: 'text',
+    status
+  }
+  outputList.value.push(newOutput)
+}
 
 /**
  * 设置命令是否可折叠
  * @param collapsible
  */
 const setCommandCollapsible = (collapsible: boolean) => {
-  currentNewCommand.collapsible = collapsible;
-};
+  currentNewCommand.collapsible = collapsible
+}
 
 /**
  * 立即输出
  * @param newOutput
  */
 const writeOutput = (newOutput: OutputType) => {
-  outputList.value.push(newOutput);
-};
+  outputList.value.push(newOutput)
+}
 
 /**
  * 输入框聚焦
  */
 const focusInput = () => {
-  commandInputRef.value.focus();
-};
+  commandInputRef.value.focus()
+}
 /**
  * 获取输入框是否聚焦
  */
 const isInputFocused = () => {
   return (
     (commandInputRef.value.input as HTMLInputElement) == document.activeElement
-  );
-};
+  )
+}
 /**
  * 设置输入框的值
  */
 const setTabCompletion = () => {
   if (hint.value) {
-    inputCommand.value.text = `${hint.value.split(" ")[0]}${
-      hint.value.split(" ").length > 1 ? " " : ""
-    }`;
+    inputCommand.value.text = `${hint.value.split(' ')[0]}${
+      hint.value.split(' ').length > 1 ? ' ' : ''
+    }`
   }
-};
+}
 
 /**
  * 折叠 / 展开所有块
@@ -361,13 +397,13 @@ const toggleAllCollapse = () => {
   // 展开
   if (activeKeys.value.length === 0) {
     activeKeys.value = outputList.value.map((_, index) => {
-      return index;
-    });
+      return index
+    })
   } else {
     // 折叠
-    activeKeys.value = [];
+    activeKeys.value = []
   }
-};
+}
 
 /**
  * 操作终端的对象
@@ -388,67 +424,68 @@ const terminal: TerminalType = {
   showPrevCommand,
   listCommandHistory,
   toggleAllCollapse,
-  setCommandCollapsible,
-};
+  setCommandCollapsible
+}
 
 /**
  * 只执行一次
  */
 onMounted(() => {
-  registerShortcuts(terminal);
-  const { welcomeTexts } = configStore;
+  registerShortcuts(terminal) //注册快捷键
+  const { welcomeTexts } = configStore //终端欢迎语
   if (welcomeTexts?.length > 0) {
+    //如果有自定义的，就用自定义的
     welcomeTexts.forEach((welcomeText) => {
-      terminal.writeTextOutput(welcomeText);
-    });
+      terminal.writeTextOutput(welcomeText)
+    })
   } else {
     terminal.writeTextOutput(
       `Welcome to y-Terminal, coolest browser index for geeks!` +
         `<a href="//github.com/mengqiuleo/y-terminal" target='_blank'> GitHub Open Source</a>`
-    );
+    )
     terminal.writeTextOutput(
       `Author <a href="//blog.csdn.net/weixin_52834435?type=blog" target="_blank">coder_xiaoy</a>` +
         `: please input 'help' to enjoy🥳`
-    );
-    terminal.writeTextOutput("<br/>");
+    )
+    terminal.writeTextOutput('<br/>')
   }
-});
+})
 
 /**
  * 当点击空白聚焦输入框
  */
 function handleClickWrapper(event: Event): void {
   //@ts-ignore
-  if (event.target.className === "yu-terminal") {
-    focusInput();
+  if (event.target.className === 'yi-terminal') {
+    focusInput()
   }
 }
 
 defineExpose({
-  terminal,
-});
+  terminal
+})
 </script>
 
 <style scoped>
-.yu-terminal-wrapper {
+.yi-terminal-wrapper {
   background: black;
 }
 
-.yu-terminal {
+.yi-terminal {
   background: rgba(0, 0, 0, 0.6);
   padding: 20px;
   overflow: scroll;
 }
 
-.yu-terminal::-webkit-scrollbar {
+.yi-terminal::-webkit-scrollbar {
   display: none;
 }
 
-.yu-terminal span {
+.yi-terminal span {
   font-size: 16px;
 }
 
-.yu-terminal
+.yi-terminal
   :deep(.ant-collapse-icon-position-right
     > .ant-collapse-item
     > .ant-collapse-header) {
@@ -456,15 +493,15 @@ defineExpose({
   padding: 0;
 }
 
-.yu-terminal :deep(.ant-collapse) {
+.yi-terminal :deep(.ant-collapse) {
   background: none;
 }
 
-.yu-terminal :deep(.ant-collapse-borderless > .ant-collapse-item) {
+.yi-terminal :deep(.ant-collapse-borderless > .ant-collapse-item) {
   border: none;
 }
 
-.yu-terminal :deep(.ant-collapse-content > .ant-collapse-content-box) {
+.yi-terminal :deep(.ant-collapse-content > .ant-collapse-content-box) {
   padding: 0;
 }
 
@@ -490,6 +527,7 @@ defineExpose({
 }
 
 .terminal-row {
+  text-align: left;
   color: white;
   font-size: 16px;
   font-family: courier-new, courier, monospace;

@@ -1,7 +1,7 @@
 /*
  * @Author: Pan Jingyi
  * @Date: 2022-09-25 20:36:38
- * @LastEditTime: 2022-09-25 21:16:47
+ * @LastEditTime: 2022-09-26 18:21:52
  */
 import { ref } from 'vue'
 import { getUsageStr } from '../../core/commands/terminal/help/helpUtils'
@@ -17,6 +17,7 @@ const useHint = () => {
   const hint = ref('')
   const { showHint } = useTerminalConfigStore()
 
+  // 命令提示
   const setHint = (inputText: string) => {
     // 未开启提示
     if (!showHint) {
@@ -55,7 +56,7 @@ const useHint = () => {
    */
   const debounceSetHint = _.debounce(function (inputText: string) {
     setHint(inputText)
-  }, 500)
+  }, 250)
 
   return {
     hint,

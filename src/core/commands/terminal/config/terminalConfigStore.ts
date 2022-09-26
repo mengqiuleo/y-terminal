@@ -1,7 +1,7 @@
 /*
  * @Author: Pan Jingyi
  * @Date: 2022-09-25 23:46:11
- * @LastEditTime: 2022-09-26 08:26:26
+ * @LastEditTime: 2022-09-26 18:02:34
  */
 import { defineStore } from 'pinia'
 
@@ -10,6 +10,7 @@ import { defineStore } from 'pinia'
  *
  * @author pjy
  */
+// 这里我们在本地localStorage的存储名称就叫terminalConfig，不过电脑会帮我们改成小写
 export const useTerminalConfigStore = defineStore('terminalConfig', {
   state: () => ({
     // 背景
@@ -21,6 +22,7 @@ export const useTerminalConfigStore = defineStore('terminalConfig', {
   }),
   getters: {},
   // 持久化
+  // 当我们刚打开页面，就会进行数据持久化
   persist: {
     key: 'terminal-config-store',
     storage: window.localStorage,

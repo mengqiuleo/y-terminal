@@ -1,7 +1,7 @@
 /*
  * @Author: Pan Jingyi
  * @Date: 2022-09-25 17:18:41
- * @LastEditTime: 2022-09-26 08:29:01
+ * @LastEditTime: 2022-09-26 16:46:49
  */
 import { createApp } from 'vue'
 import './style.css'

@@ -1,7 +1,7 @@
 /*
  * @Author: Pan Jingyi
  * @Date: 2022-09-25 23:36:39
- * @LastEditTime: 2022-09-26 08:16:25
+ * @LastEditTime: 2022-09-26 19:17:03
  */
 import { CommandType } from '../../../command'
 import { useTerminalConfigStore } from './terminalConfigStore'
@@ -13,7 +13,7 @@ import myAxios from '../../../../plugins/myAxios'
  * @author pjy
  */
 const backgroundCommand: CommandType = {
-  func: 'background',
+  func: 'bg',
   name: '切换终端背景',
   alias: ['bg'],
   params: [
