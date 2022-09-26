@@ -9,7 +9,7 @@ import ComponentOutputType = YiTerminal.ComponentOutputType
 
 /**
  * 快捷键命令
- * @author yupi
+ * @author pjy
  */
 const shortcutCommand: CommandType = {
   func: 'shortcut',

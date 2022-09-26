@@ -1,23 +1,30 @@
 <!--
  * @Author: Pan Jingyi
  * @Date: 2022-09-25 18:27:02
- * @LastEditTime: 2022-09-25 23:21:46
+ * @LastEditTime: 2022-09-26 10:18:07
 -->
 <template>
-  <div></div>
+  <my-terminal
+    ref="terminalRef"
+    full-screen
+    :on-submit-command="onSubmitCommand"
+  />
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
-// import CommandOutputType = YiTerminal.CommandOutputType
-// import OutputType = YiTerminal.OutputType
+<script setup lang="ts">
+import { doCommandExecute } from "../core/commandExecutor"
+import { defineComponent, ref } from 'vue'
 
-// const commandList = ref<CommandOutputType[]>([])
+const terminalRef = ref();
 
-export default defineComponent({
-  setup() {
-    return {}
+const onSubmitCommand = async (inputText: string) => {
+  if (!inputText) {
+    return;
   }
-})
+  const terminal = terminalRef.value.terminal;
+  await doCommandExecute(inputText, terminal);
+};
+
+
 </script>
 <style lang="" scoped></style>

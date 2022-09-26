@@ -1,7 +1,7 @@
 /*
  * @Author: Pan Jingyi
  * @Date: 2022-09-25 23:37:05
- * @LastEditTime: 2022-09-25 23:42:36
+ * @LastEditTime: 2022-09-26 11:33:18
  */
 import { CommandType } from './command'
 import clearCommand from './commands/terminal/clearCommand'
@@ -16,6 +16,7 @@ import musicCommand from './commands/relax/music/musicCommand'
 import moyuCommand from './commands/relax/moyu/moyuCommand'
 import shortcutCommand from './commands/terminal/shortcut/shortcutCommand'
 import hotCommand from './commands/hot/hotCommand'
+import baiduCommand from './commands/search/baiduCommand'
 
 /**
  * 命令列表（数组元素顺序会影响 help 命令的展示顺序）
@@ -32,7 +33,8 @@ const commandList: CommandType[] = [
   moyuCommand,
   backgroundCommand,
   resetCommand,
-  hintCommand
+  hintCommand,
+  baiduCommand
 ]
 
 /**

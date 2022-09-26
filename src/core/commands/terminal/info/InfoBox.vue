@@ -1,20 +1,20 @@
 <!--
  * @Author: Pan Jingyi
  * @Date: 2022-09-25 23:36:39
- * @LastEditTime: 2022-09-25 23:48:26
+ * @LastEditTime: 2022-09-26 11:40:37
 -->
 <template>
-  <div>关于本站：YuIndex 极客范儿的浏览器主页</div>
+  <div>关于本站：y-Terminal 极客范儿的浏览器主页</div>
   <div>
-    <a href="https://github.com/liyupi/yuindex" target="_blank">
+    <a href="https://github.com/mengqiuleo/y-terminal" target="_blank">
       代码开源，欢迎 star 和贡献~
     </a>
   </div>
   <div></div>
   <div>
     作者：
-    <a href="https://docs.qq.com/doc/DUFFRVWladXVjeUxW" target="_blank">
-      程序员鱼皮
+    <a href="https://blog.csdn.net/weixin_52834435?type=blog" target="_blank">
+      程序员小y
     </a>
   </div>
 </template>

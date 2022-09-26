@@ -1,5 +1,10 @@
+/*
+ * @Author: Pan Jingyi
+ * @Date: 2022-09-25 20:44:14
+ * @LastEditTime: 2022-09-26 10:39:55
+ */
 import { ParsedOptions } from 'getopts'
-import TerminalType = YuTerminal.TerminalType
+import TerminalType = YiTerminal.TerminalType
 
 /**
  * 命令类型

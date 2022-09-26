@@ -13,7 +13,7 @@
     "commit": "cz"
   },
   "dependencies": {
-    "ant-design-vue": "^3.2.12",
+    "ant-design-vue": "^3.2.10",
     "axios": "^0.27.2",
     "getopts": "^2.3.0",
     "lodash": "^4.17.21",
