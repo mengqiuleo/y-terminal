@@ -10,33 +10,33 @@ import { defineStore } from 'pinia'
  *
  * @author pjy
  */
-export const useTerminalConfigStore = defineStore("terminalConfig", {
+export const useTerminalConfigStore = defineStore('terminalConfig', {
   state: () => ({
     // 背景
-    background: "black",
+    background: 'black',
     // 输入提示
     showHint: true,
     // 终端欢迎语
-    welcomeTexts: [] as string[],
+    welcomeTexts: [] as string[]
   }),
   getters: {},
   // 持久化
   persist: {
-    key: "terminal-config-store",
+    key: 'terminal-config-store',
     storage: window.localStorage,
     beforeRestore: (context) => {
-      console.log("load terminalConfigStore data start");
+      console.log('load terminalConfigStore data start')
     },
     afterRestore: (context) => {
-      console.log("load terminalConfigStore data end");
-    },
+      console.log('load terminalConfigStore data end')
+    }
   },
   actions: {
     setBackground(url: string) {
       if (!url) {
-        return;
+        return
       }
-      this.background = url;
+      this.background = url
     },
     /**
      * 设置或反转提示
@@ -46,26 +46,26 @@ export const useTerminalConfigStore = defineStore("terminalConfig", {
     setOrToggleShowHint(hint?: string): boolean {
       // 反转提示
       if (!hint) {
-        this.showHint = !this.showHint;
-        return this.showHint;
+        this.showHint = !this.showHint
+        return this.showHint
       }
       // 设置提示
-      if (hint === "on") {
-        this.showHint = true;
-      } else if (hint === "off") {
-        this.showHint = false;
+      if (hint === 'on') {
+        this.showHint = true
+      } else if (hint === 'off') {
+        this.showHint = false
       }
-      return this.showHint;
+      return this.showHint
     },
     /**
      * 修改终端提示语
      * @param welcomeTexts
      */
     setWelcomeTexts(welcomeTexts: string[]) {
-      this.welcomeTexts = welcomeTexts;
+      this.welcomeTexts = welcomeTexts
     },
     reset() {
-      this.$reset();
-    },
-  },
-});
+      this.$reset()
+    }
+  }
+})
