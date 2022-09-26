@@ -18,22 +18,22 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 const gameList = [
-  "https://haiyong.site/moyu/shitoujiandaobu/",
-  "https://haiyong.site/moyu/lion.html",
-  "https://haiyong.site/moyu/shengchengshu.html",
-  "https://haiyong.site/moyu/zhipaijiyi.html",
-  "https://haiyong.site/moyu/doumao.html",
-  "https://haiyong.site/moyu/dadishu.html",
-  "https://haiyong.site/moyu/laganziguoguan/",
-  "https://haiyong.site/moyu/danzhu.html",
-  "https://haiyong.site/moyu/feiji.html",
-  "https://haiyong.site/moyu/doudizhu.html",
-  "https://haiyong.site/moyu/tiaofangzi.html",
-  "https://haiyong.site/moyu/SpaceHuggers/",
-  "https://haiyong.site/moyu/weijing/",
-];
+  'https://haiyong.site/moyu/shitoujiandaobu/',
+  'https://haiyong.site/moyu/lion.html',
+  'https://haiyong.site/moyu/shengchengshu.html',
+  'https://haiyong.site/moyu/zhipaijiyi.html',
+  'https://haiyong.site/moyu/doumao.html',
+  'https://haiyong.site/moyu/dadishu.html',
+  'https://haiyong.site/moyu/laganziguoguan/',
+  'https://haiyong.site/moyu/danzhu.html',
+  'https://haiyong.site/moyu/feiji.html',
+  'https://haiyong.site/moyu/doudizhu.html',
+  'https://haiyong.site/moyu/tiaofangzi.html',
+  'https://haiyong.site/moyu/SpaceHuggers/',
+  'https://haiyong.site/moyu/weijing/'
+]
 
-const currentGame = gameList[Math.floor(Math.random() * gameList.length)];
+const currentGame = gameList[Math.floor(Math.random() * gameList.length)]
 </script>
 
 <style scoped>

@@ -15,10 +15,10 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from "vue";
-import { commandList } from "../../../commandRegister";
+import { onMounted } from 'vue'
+import { commandList } from '../../../commandRegister'
 
-onMounted(() => {});
+onMounted(() => {})
 </script>
 
 <style scoped></style>

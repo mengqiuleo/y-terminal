@@ -1,14 +1,14 @@
 /*
  * @Author: Pan Jingyi
  * @Date: 2022-09-25 23:46:11
- * @LastEditTime: 2022-09-25 23:46:51
+ * @LastEditTime: 2022-09-26 08:26:26
  */
-import { defineStore } from "pinia";
+import { defineStore } from 'pinia'
 
 /**
  * 终端配置状态存储
  *
- * @author yupi
+ * @author pjy
  */
 export const useTerminalConfigStore = defineStore("terminalConfig", {
   state: () => ({
@@ -21,16 +21,16 @@ export const useTerminalConfigStore = defineStore("terminalConfig", {
   }),
   getters: {},
   // 持久化
-  // persist: {
-  //   key: "terminal-config-store",
-  //   storage: window.localStorage,
-  //   beforeRestore: (context) => {
-  //     console.log("load terminalConfigStore data start");
-  //   },
-  //   afterRestore: (context) => {
-  //     console.log("load terminalConfigStore data end");
-  //   },
-  // },
+  persist: {
+    key: "terminal-config-store",
+    storage: window.localStorage,
+    beforeRestore: (context) => {
+      console.log("load terminalConfigStore data start");
+    },
+    afterRestore: (context) => {
+      console.log("load terminalConfigStore data end");
+    },
+  },
   actions: {
     setBackground(url: string) {
       if (!url) {

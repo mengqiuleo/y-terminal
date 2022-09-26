@@ -1,4 +1,4 @@
-import myAxios from "../../../../plugins/myAxios";
+import myAxios from '../../../../plugins/myAxios'
 
 /**
  * 搜索单条音乐
@@ -6,7 +6,7 @@ import myAxios from "../../../../plugins/myAxios";
  */
 export const getSingleMusic = async (keywords: string) => {
   if (!keywords) {
-    return null;
+    return null
   }
-  return await myAxios.post("/music/get", { keywords });
-};
+  return await myAxios.post('/music/get', { keywords })
+}

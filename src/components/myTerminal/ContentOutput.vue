@@ -20,35 +20,35 @@
 </template>
 
 <script setup lang="ts">
-import smartText from "../../utils/smartText";
-import OutputType = YiTerminal.OutputType;
-import { computed, toRefs } from "vue";
+import smartText from '../../utils/smartText'
+import OutputType = YiTerminal.OutputType
+import { computed, toRefs } from 'vue'
 
 interface OutputProps {
-  output: OutputType;
+  output: OutputType
 }
 
-const props = defineProps<OutputProps>();
-const { output } = toRefs(props);
+const props = defineProps<OutputProps>()
+const { output } = toRefs(props)
 const outputTagColor = computed((): string => {
   if (!output.value.status) {
-    return "";
+    return ''
   }
   switch (output.value.status) {
-    case "info":
-      return "dodgerblue";
-    case "success":
-      return "limegreen";
-    case "warning":
-      return "darkorange";
-    case "error":
-      return "#c0300f";
-    case "system":
-      return "#bfc4c9";
+    case 'info':
+      return 'dodgerblue'
+    case 'success':
+      return 'limegreen'
+    case 'warning':
+      return 'darkorange'
+    case 'error':
+      return '#c0300f'
+    case 'system':
+      return '#bfc4c9'
     default:
-      return "";
+      return ''
   }
-});
+})
 </script>
 
 <style scoped>

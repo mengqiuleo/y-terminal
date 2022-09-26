@@ -1,40 +1,45 @@
-import { CommandType } from "../../../command";
-import { defineAsyncComponent } from "vue";
-import ComponentOutputType = YuTerminal.ComponentOutputType;
+/*
+ * @Author: Pan Jingyi
+ * @Date: 2022-09-25 23:32:22
+ * @LastEditTime: 2022-09-26 08:10:01
+ */
+import { CommandType } from '../../../command'
+import { defineAsyncComponent } from 'vue'
+import ComponentOutputType = YiTerminal.ComponentOutputType
 
 /**
  * 音乐命令
- * @author yupi
+ * @author pjy
  */
 const musicCommand: CommandType = {
-  func: "music",
-  name: "音乐",
-  desc: "在线听音乐",
+  func: 'music',
+  name: '音乐',
+  desc: '在线听音乐',
   params: [
     {
-      key: "name",
-      desc: "音乐名称",
-      required: true,
-    },
+      key: 'name',
+      desc: '音乐名称',
+      required: true
+    }
   ],
   options: [],
   collapsible: true,
   action(options, terminal) {
-    const { _ } = options;
+    const { _ } = options
     if (_.length < 1) {
-      terminal.writeTextErrorResult("参数不足");
-      return;
+      terminal.writeTextErrorResult('参数不足')
+      return
     }
-    const name = _[0];
+    const name = _[0]
     const output: ComponentOutputType = {
-      type: "component",
-      component: defineAsyncComponent(() => import("./MusicBox.vue")),
+      type: 'component',
+      component: defineAsyncComponent(() => import('./MusicBox.vue')),
       props: {
-        name,
-      },
-    };
-    terminal.writeResult(output);
-  },
-};
+        name
+      }
+    }
+    terminal.writeResult(output)
+  }
+}
 
-export default musicCommand;
+export default musicCommand

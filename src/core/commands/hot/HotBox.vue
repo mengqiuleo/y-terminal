@@ -10,21 +10,21 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
-import { listHotMusics } from "./hotApi";
-import { message } from "ant-design-vue";
+import { onMounted, ref } from 'vue'
+import { listHotMusics } from './hotApi'
+import { message } from 'ant-design-vue'
 
-const songList = ref([] as any[]);
+const songList = ref([] as any[])
 
 onMounted(async () => {
-  const res: any = await listHotMusics();
+  const res: any = await listHotMusics()
   if (res?.code === 0) {
-    const songs = res.data;
-    songList.value = songs.slice(0, 10);
+    const songs = res.data
+    songList.value = songs.slice(0, 10)
   } else {
-    message.error("加载失败");
+    message.error('加载失败')
   }
-});
+})
 </script>
 
 <style scoped></style>

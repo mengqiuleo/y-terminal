@@ -20,12 +20,12 @@
 </template>
 
 <script setup lang="ts">
-  import {  ref } from 'vue'
+import { ref } from 'vue'
 interface InfoBoxProps {
-  seconds: string;
+  seconds: string
 }
 
-const props = withDefaults(defineProps<InfoBoxProps>(), {});
+const props = withDefaults(defineProps<InfoBoxProps>(), {})
 </script>
 
 <style scoped></style>

@@ -9,8 +9,7 @@
       <a-collapse>
         <template></template>
       </a-collapse>
-      232136
-      5
+      232136 5
     </div>
   </div>
 </template>

@@ -1,8 +1,8 @@
-import getopts, { ParsedOptions } from "getopts";
-import { commandMap } from "./commandRegister";
-import { CommandOptionType, CommandType } from "./command";
-import TerminalType = YiTerminal.TerminalType;
-import helpCommand from "./commands/terminal/help/helpCommand";
+import getopts, { ParsedOptions } from 'getopts'
+import { commandMap } from './commandRegister'
+import { CommandOptionType, CommandType } from './command'
+import TerminalType = YiTerminal.TerminalType
+import helpCommand from './commands/terminal/help/helpCommand'
 
 /**
  * 执行命令
@@ -16,19 +16,19 @@ export const doCommandExecute = async (
   parentCommand?: CommandType
 ) => {
   //去除命令首尾空格
-  text = text.trim();
+  text = text.trim()
   if (!text) {
-    return;
+    return
   }
   // 解析文本，得到命令
-  const command: CommandType = getCommand(text, parentCommand);
+  const command: CommandType = getCommand(text, parentCommand)
   if (!command) {
-    terminal.writeTextErrorResult("找不到命令");
-    return;
+    terminal.writeTextErrorResult('找不到命令')
+    return
   }
   // 解析参数（需传递不同的解析规则）
-  const parsedOptions = doParse(text, command.options);
-  const { _ } = parsedOptions;
+  const parsedOptions = doParse(text, command.options)
+  const { _ } = parsedOptions
   // 有子命令，执行
   if (
     _.length > 0 &&
@@ -36,13 +36,13 @@ export const doCommandExecute = async (
     Object.keys(command.subCommands).length > 0
   ) {
     // 把子命令当做新命令解析，user login xxx => login xxx
-    const subText = text.substring(text.indexOf(" ") + 1);
-    await doCommandExecute(subText, terminal, command);
-    return;
+    const subText = text.substring(text.indexOf(' ') + 1)
+    await doCommandExecute(subText, terminal, command)
+    return
   }
   // 执行命令
-  await doAction(command, parsedOptions, terminal, parentCommand);
-};
+  await doAction(command, parsedOptions, terminal, parentCommand)
+}
 
 /**
  * 获取命令（匹配）
@@ -50,22 +50,22 @@ export const doCommandExecute = async (
  * @param parentCommand
  */
 const getCommand = (text: string, parentCommand?: CommandType): CommandType => {
-  let func = text.split(" ", 1)[0];
+  let func = text.split(' ', 1)[0]
   // 大小写无关
-  func = func.toLowerCase();
-  let commands = commandMap;
+  func = func.toLowerCase()
+  let commands = commandMap
   // 有父命令，则从父命令中查找
   if (
     parentCommand &&
     parentCommand.subCommands &&
     Object.keys(parentCommand.subCommands).length > 0
   ) {
-    commands = parentCommand.subCommands;
+    commands = parentCommand.subCommands
   }
-  const command = commands[func];
-  console.log("getCommand = ", command);
-  return command;
-};
+  const command = commands[func]
+  console.log('getCommand = ', command)
+  return command
+}
 
 /**
  * 解析参数
@@ -77,28 +77,28 @@ const doParse = (
   commandOptions: CommandOptionType[]
 ): getopts.ParsedOptions => {
   // 过滤掉关键词
-  const args: string[] = text.split(" ").slice(1);
+  const args: string[] = text.split(' ').slice(1)
   // 转换
   const options: getopts.Options = {
     alias: {},
     default: {},
     string: [],
-    boolean: [],
-  };
+    boolean: []
+  }
   commandOptions.forEach((commandOption) => {
-    const { alias, key, type, defaultValue } = commandOption;
+    const { alias, key, type, defaultValue } = commandOption
     if (alias && options.alias) {
-      options.alias[key] = alias;
+      options.alias[key] = alias
     }
-    options[type]?.push(key);
+    options[type]?.push(key)
     if (defaultValue && options.default) {
-      options.default[key] = defaultValue;
+      options.default[key] = defaultValue
     }
-  });
-  const parsedOptions = getopts(args, options);
-  console.log("parsedOptions = ", parsedOptions);
-  return parsedOptions;
-};
+  })
+  const parsedOptions = getopts(args, options)
+  console.log('parsedOptions = ', parsedOptions)
+  return parsedOptions
+}
 
 /**
  * 执行
@@ -113,17 +113,17 @@ const doAction = async (
   terminal: TerminalType,
   parentCommand?: CommandType
 ) => {
-  const { help } = options;
+  const { help } = options
   // 设置输出折叠
   if (command.collapsible || help) {
-    terminal.setCommandCollapsible(true);
+    terminal.setCommandCollapsible(true)
   }
   // 查看帮助
   // e.g. xxx --help => { _: ["xxx"] }
   if (help) {
-    const newOptions = { ...options, _: [command.func] };
-    helpCommand.action(newOptions, terminal, parentCommand);
-    return;
+    const newOptions = { ...options, _: [command.func] }
+    helpCommand.action(newOptions, terminal, parentCommand)
+    return
   }
-  await command.action(options, terminal);
-};
+  await command.action(options, terminal)
+}

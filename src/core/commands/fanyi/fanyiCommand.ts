@@ -3,59 +3,59 @@
  * @Date: 2022-09-25 23:38:05
  * @LastEditTime: 2022-09-25 23:43:26
  */
-import { CommandType } from "../../command";
-import { translate } from "./fanYiApi";
+import { CommandType } from '../../command'
+import { translate } from './fanYiApi'
 
 /**
  * 翻译命令
  * @author pjy
  */
 const fanyiCommand: CommandType = {
-  func: "fanyi",
-  name: "翻译",
+  func: 'fanyi',
+  name: '翻译',
   alias: [],
   params: [
     {
-      key: "word",
-      desc: "要翻译的内容",
-      required: true,
-    },
+      key: 'word',
+      desc: '要翻译的内容',
+      required: true
+    }
   ],
   options: [
     {
-      key: "from",
-      desc: "源语言",
-      alias: ["f"],
-      type: "string",
-      defaultValue: "auto",
+      key: 'from',
+      desc: '源语言',
+      alias: ['f'],
+      type: 'string',
+      defaultValue: 'auto'
     },
     {
-      key: "to",
-      desc: "目标语言",
-      alias: ["t"],
-      type: "string",
-      defaultValue: "auto",
-    },
+      key: 'to',
+      desc: '目标语言',
+      alias: ['t'],
+      type: 'string',
+      defaultValue: 'auto'
+    }
   ],
   async action(options, terminal) {
-    const { _, from, to } = options;
+    const { _, from, to } = options
     if (_.length < 1) {
-      terminal.writeTextErrorResult("参数不足");
-      return;
+      terminal.writeTextErrorResult('参数不足')
+      return
     }
-    const keywords = _.join(" ");
+    const keywords = _.join(' ')
     const res: any = await translate(keywords, {
       from,
-      to,
-    });
+      to
+    })
     if (res?.code === 0) {
       terminal.writeTextSuccessResult(
         `翻译结果：${res.data.trans_result[0].dst}`
-      );
+      )
     } else {
-      terminal.writeTextErrorResult(res?.message ?? "翻译失败");
+      terminal.writeTextErrorResult(res?.message ?? '翻译失败')
     }
-  },
-};
+  }
+}
 
-export default fanyiCommand;
+export default fanyiCommand

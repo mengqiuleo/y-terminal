@@ -17,6 +17,8 @@
     "axios": "^0.27.2",
     "getopts": "^2.3.0",
     "lodash": "^4.17.21",
+    "pinia": "^2.0.22",
+    "pinia-plugin-persistedstate": "^2.2.0",
     "unplugin-vue-components": "^0.22.7",
     "vue": "^3.2.37",
     "vue-router": "^4.1.5"
