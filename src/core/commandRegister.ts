@@ -1,7 +1,7 @@
 /*
  * @Author: Pan Jingyi
  * @Date: 2022-09-25 23:37:05
- * @LastEditTime: 2022-09-26 11:33:18
+ * @LastEditTime: 2022-09-27 18:07:24
  */
 import { CommandType } from './command'
 import clearCommand from './commands/terminal/clearCommand'
@@ -17,6 +17,14 @@ import moyuCommand from './commands/relax/moyu/moyuCommand'
 import shortcutCommand from './commands/terminal/shortcut/shortcutCommand'
 import hotCommand from './commands/hot/hotCommand'
 import baiduCommand from './commands/search/baiduCommand'
+import githubCommand from './commands/search/githubCommand'
+import googleCommand from './commands/search/googleCommand'
+import zhihuCommand from './commands/search/zhihuCommand'
+import gotoCommand from './commands/gotoCommand'
+import dateCommand from './commands/dateCommand'
+import juejinCommand from './commands/search/juejinCommand'
+import csdnCommand from './commands/search/csdnCommand'
+import weatherCommand from './commands/weather/weatherCommand'
 
 /**
  * 命令列表（数组元素顺序会影响 help 命令的展示顺序）
@@ -34,7 +42,15 @@ const commandList: CommandType[] = [
   backgroundCommand,
   resetCommand,
   hintCommand,
-  baiduCommand
+  baiduCommand,
+  githubCommand,
+  googleCommand,
+  zhihuCommand,
+  gotoCommand,
+  dateCommand,
+  juejinCommand,
+  csdnCommand,
+  weatherCommand
 ]
 
 /**

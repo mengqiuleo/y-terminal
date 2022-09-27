@@ -1,13 +1,18 @@
+/*
+ * @Author: Pan Jingyi
+ * @Date: 2022-09-25 23:33:25
+ * @LastEditTime: 2022-09-26 21:08:53
+ */
 import { CommandType } from '../../command'
 
 /**
- * 搜狗搜索命令
- * @author Edmon-Leo
+ * csdn搜索命令
+ * @author pjy
  */
-const sogouCommand: CommandType = {
-  func: 'sogou',
-  name: '搜狗搜索',
-  alias: ['sg'],
+const baiduCommand: CommandType = {
+  func: 'csdn',
+  name: 'csdn搜索',
+  alias: [],
   params: [
     {
       key: 'word',
@@ -27,7 +32,8 @@ const sogouCommand: CommandType = {
   action(options, terminal) {
     const { _, self } = options
     const word = _.length > 0 ? _[0] : ''
-    const targetLink = `https://www.sogou.com/web?query=${word}`
+    // https://so.csdn.net/so/search?q=${word}&t=&u=&urw=
+    let targetLink = `https://so.csdn.net/so/search?q=${word}&t=&u=&urw=`
     if (self) {
       window.location.href = targetLink
     } else {
@@ -36,4 +42,4 @@ const sogouCommand: CommandType = {
   }
 }
 
-export default sogouCommand
+export default baiduCommand

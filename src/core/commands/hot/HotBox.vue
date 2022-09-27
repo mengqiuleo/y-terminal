@@ -1,10 +1,15 @@
+<!--
+ * @Author: Pan Jingyi
+ * @Date: 2022-09-25 23:30:08
+ * @LastEditTime: 2022-09-26 21:15:37
+-->
 <template>
   <div>
     <div v-for="(song, index) in songList" :key="index">
       <a :href="`https://music.163.com/#/song?id=${song?.id}`" target="_blank">
         {{ song?.al?.name }}
       </a>
-      <img :src="song?.al?.picUrl" height="25" :alt="song?.al?.name" />
+      <img :src="song?.al?.picUrl" height="23" :alt="song?.al?.name" />
     </div>
   </div>
 </template>
@@ -27,4 +32,10 @@ onMounted(async () => {
 })
 </script>
 
-<style scoped></style>
+<style scoped>
+img {
+  border-radius: 50%;
+  margin-bottom: 2px;
+  margin-left: 2px;
+}
+</style>

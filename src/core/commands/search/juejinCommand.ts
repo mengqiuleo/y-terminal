@@ -1,13 +1,18 @@
+/*
+ * @Author: Pan Jingyi
+ * @Date: 2022-09-25 23:33:25
+ * @LastEditTime: 2022-09-26 21:09:03
+ */
 import { CommandType } from '../../command'
 
 /**
- * 查梗（小鸡词典）命令
- * @author yupi
+ * 掘金搜索命令
+ * @author pjy
  */
-const gengCommand: CommandType = {
-  func: 'geng',
-  name: '梗搜索',
-  alias: ['xiaoji'],
+const baiduCommand: CommandType = {
+  func: 'juejin',
+  name: '掘金搜索',
+  alias: [],
   params: [
     {
       key: 'word',
@@ -27,7 +32,7 @@ const gengCommand: CommandType = {
   action(options, terminal) {
     const { _, self } = options
     const word = _.length > 0 ? _[0] : ''
-    const targetLink = `https://jikipedia.com/search?phrase=${word}`
+    let targetLink = `https://juejin.cn/search?utm_source=infinitynewtab.com&query=${word}`
     if (self) {
       window.location.href = targetLink
     } else {
@@ -36,4 +41,4 @@ const gengCommand: CommandType = {
   }
 }
 
-export default gengCommand
+export default baiduCommand

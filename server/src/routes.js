@@ -1,3 +1,8 @@
+/*
+ * @Author: Pan Jingyi
+ * @Date: 2022-09-25 20:48:53
+ * @LastEditTime: 2022-09-27 17:48:47
+ */
 /**
  * 接口路由
  * @author pjy
@@ -34,6 +39,10 @@ const routes = [
   {
     path: '/background/get/random',
     handler: require('./controller/backgroundController').getRandomBackgroundApi
+  },
+  {
+    path: '/weather',
+    handler: require('./controller/weatherController').getWeatherApi
   }
 ]
 

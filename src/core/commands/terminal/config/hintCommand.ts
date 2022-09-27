@@ -1,3 +1,8 @@
+/*
+ * @Author: Pan Jingyi
+ * @Date: 2022-09-25 23:36:39
+ * @LastEditTime: 2022-09-26 19:52:31
+ */
 import { CommandType } from '../../../command'
 import { useTerminalConfigStore } from './terminalConfigStore'
 
@@ -7,7 +12,7 @@ import { useTerminalConfigStore } from './terminalConfigStore'
  */
 const hintCommand: CommandType = {
   func: 'hint',
-  name: '开关提示',
+  name: '命令提示',
   desc: '开启 / 关闭输入提示',
   params: [
     {

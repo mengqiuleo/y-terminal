@@ -1,7 +1,7 @@
 /*
  * @Author: Pan Jingyi
  * @Date: 2022-09-25 17:45:42
- * @LastEditTime: 2022-09-26 16:51:48
+ * @LastEditTime: 2022-09-27 19:03:44
  */
 module.exports = {
   env: {
@@ -25,16 +25,17 @@ module.exports = {
   },
   plugins: ['vue', '@typescript-eslint'],
   rules: {
-    endOfLine: 0,
+    'endOfLine': 0,
     '@typescript-eslint/no-var-requires': 0,
     //关闭组件命名规则
-    'vue/multi-word-component-names': 'off',
-    'no-undef': 'off',
-    'prefer-const': 'off',
-    'no-useless-escape': 'off',
-    '@typescript-eslint/ban-ts-comment': 'off',
-    '@typescript-eslint/no-unused-vars': 'off',
-    '@typescript-eslint/no-empty-function': 'off',
-    '@typescript-eslint/no-explicit-any': 'off'
+    'vue/multi-word-component-names': 0,
+    'no-undef': 0,
+    'prefer-const': 0,
+    'no-useless-escape': 0,
+    '@typescript-eslint/ban-ts-comment': 0,
+    '@typescript-eslint/no-unused-vars': 0,
+    '@typescript-eslint/no-empty-function': 0,
+    '@typescript-eslint/no-explicit-any': 0,
+    'prettier/prettier': 'off'
   }
 }

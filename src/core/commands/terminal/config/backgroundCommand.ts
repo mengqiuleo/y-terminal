@@ -1,7 +1,7 @@
 /*
  * @Author: Pan Jingyi
  * @Date: 2022-09-25 23:36:39
- * @LastEditTime: 2022-09-26 19:17:03
+ * @LastEditTime: 2022-09-26 21:11:07
  */
 import { CommandType } from '../../../command'
 import { useTerminalConfigStore } from './terminalConfigStore'
@@ -14,7 +14,7 @@ import myAxios from '../../../../plugins/myAxios'
  */
 const backgroundCommand: CommandType = {
   func: 'bg',
-  name: '切换终端背景',
+  name: '切换背景(bing每日壁纸)',
   alias: ['bg'],
   params: [
     {
