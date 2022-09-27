@@ -14,4 +14,3 @@ export const getWeather = async (keywords: string) => {
   }
   return await myAxios.post('/weather', { keywords })
 }
-

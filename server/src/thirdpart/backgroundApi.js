@@ -10,10 +10,11 @@ const axios = require('axios')
  * @return {Promise<*[]>}
  */
 async function getRandomBackground() {
-  const api = 'https://cn.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=zh-CN'
+  const api =
+    'https://cn.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=zh-CN'
   let result = await axios.get(api).then((res) => res.data)
   result = `https://ch.bing.com` + result[`images`][0].url
-  return result;
+  return result
 }
 
 module.exports = {
