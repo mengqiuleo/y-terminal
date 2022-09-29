@@ -1,7 +1,7 @@
 /*
  * @Author: Pan Jingyi
  * @Date: 2022-09-25 20:48:53
- * @LastEditTime: 2022-09-27 18:14:03
+ * @LastEditTime: 2022-09-29 12:24:23
  */
 const axios = require('axios')
 
@@ -43,8 +43,8 @@ async function getWeather(city) {
     .then((res) => res.data.forecasts[0].casts)
   console.log('featureResult: ', featureResult)
 
-  const allResult = { ...infoResult, ...featureResult }
-  return allResult
+  // const allResult = { ...infoResult, ...featureResult }
+  return featureResult
 }
 
 module.exports = {

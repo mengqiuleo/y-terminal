@@ -1,7 +1,7 @@
 /*
  * @Author: Pan Jingyi
  * @Date: 2022-09-27 08:11:05
- * @LastEditTime: 2022-09-27 19:24:38
+ * @LastEditTime: 2022-09-29 11:41:27
  */
 export type Weather = {
   date: string
@@ -17,5 +17,5 @@ export type Weather = {
 }
 
 export type WeatherInfo = {
-  weather: Weather[]
+  weather_list: Weather[]
 }
