@@ -1,11 +1,10 @@
 /*
  * @Author: Pan Jingyi
  * @Date: 2022-09-25 17:18:41
- * @LastEditTime: 2022-09-29 12:56:37
+ * @LastEditTime: 2022-11-03 21:25:12
  */
 import { createApp } from 'vue'
 import './style.css'
-import './tailwindcss.css'
 import App from './App.vue'
 import * as VueRouter from 'vue-router'
 import routes from './config/routes'

@@ -1,7 +1,7 @@
 <!--
  * @Author: Pan Jingyi
  * @Date: 2022-09-25 18:27:02
- * @LastEditTime: 2022-09-26 10:18:07
+ * @LastEditTime: 2022-11-03 21:55:36
 -->
 <template>
   <my-terminal
@@ -10,6 +10,7 @@
     :on-submit-command="onSubmitCommand"
   />
 </template>
+<!-- 这里引用子组件: my-terminal, 但是没有明显的引入,不知道咋引入的。onSubmitCommand属性是必传，子组件的props可以从118行（子组件）看见  -->
 
 <script setup lang="ts">
 import { doCommandExecute } from '../core/commandExecutor'

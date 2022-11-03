@@ -8,7 +8,7 @@ const axios = require('axios')
 async function getArticle(count) {
   const api =
     'https://api.juejin.cn/recommend_api/v1/article/recommend_cate_feed?aid=2608&uuid=7065882601848702499&spider=0'
-  let random = Math.floor(Math.random() * 100 + 1)+'';
+  let random = Math.floor(Math.random() * 100 + 1) + ''
   let data = {
     id_type: 2,
     sort_type: 200,

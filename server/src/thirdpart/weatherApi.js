@@ -1,7 +1,7 @@
 /*
  * @Author: Pan Jingyi
  * @Date: 2022-09-25 20:48:53
- * @LastEditTime: 2022-09-29 12:24:23
+ * @LastEditTime: 2022-11-03 22:50:58
  */
 const axios = require('axios')
 
@@ -19,7 +19,7 @@ async function getWeather(city) {
       }
     })
     .then((res) => res.data.districts[0].adcode)
-  console.log('adcode: ', adcode)
+  // console.log('adcode: ', adcode)
 
   const weatherApi = 'https://restapi.amap.com/v3/weather/weatherInfo?'
   let infoResult = await axios
@@ -30,7 +30,7 @@ async function getWeather(city) {
       }
     })
     .then((res) => res.data.lives)
-  console.log('infoResult: ', infoResult)
+  // console.log('infoResult: ', infoResult)
 
   let featureResult = await axios
     .get(weatherApi, {
@@ -41,7 +41,7 @@ async function getWeather(city) {
       }
     })
     .then((res) => res.data.forecasts[0].casts)
-  console.log('featureResult: ', featureResult)
+  // console.log('featureResult: ', featureResult)
 
   // const allResult = { ...infoResult, ...featureResult }
   return featureResult

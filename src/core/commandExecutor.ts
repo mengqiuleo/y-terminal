@@ -21,7 +21,7 @@ export const doCommandExecute = async (
     return
   }
   // 解析文本，得到命令
-  const command: CommandType = getCommand(text, parentCommand)
+  const command: CommandType = getCommand(text, parentCommand) //获取命令
   if (!command) {
     terminal.writeTextErrorResult('找不到命令')
     return
@@ -45,7 +45,8 @@ export const doCommandExecute = async (
 }
 
 /**
- * 获取命令（匹配）
+ * 1.获取命令（匹配）
+ * 首先我们需要获取命令：从命令Map中查找有没有当前命令
  * @param text
  * @param parentCommand
  */
@@ -63,12 +64,14 @@ const getCommand = (text: string, parentCommand?: CommandType): CommandType => {
     commands = parentCommand.subCommands
   }
   const command = commands[func]
-  console.log('getCommand = ', command)
+  console.log('获取命令，getCommand = ', command)
   return command
 }
 
 /**
- * 解析参数
+ * 2. 解析参数
+ * 第二步我们需要解析命令
+ * eg: help hot =>  hot就是参数
  * @param text
  * @param commandOptions
  */
@@ -80,13 +83,13 @@ const doParse = (
   const args: string[] = text.split(' ').slice(1)
   // 转换
   const options: getopts.Options = {
-    alias: {},
+    alias: {}, //别名
     default: {},
     string: [],
     boolean: []
   }
   commandOptions.forEach((commandOption) => {
-    const { alias, key, type, defaultValue } = commandOption
+    const { alias, key, type, defaultValue } = commandOption //alias命令简写，key:参数，type:string/boolean
     if (alias && options.alias) {
       options.alias[key] = alias
     }
@@ -96,12 +99,12 @@ const doParse = (
     }
   })
   const parsedOptions = getopts(args, options)
-  console.log('parsedOptions = ', parsedOptions)
+  console.log('解析参数，parsedOptions = ', parsedOptions)
   return parsedOptions
 }
 
 /**
- * 执行
+ * 3. 执行
  * @param command
  * @param options
  * @param terminal

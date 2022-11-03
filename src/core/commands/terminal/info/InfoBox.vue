@@ -5,11 +5,11 @@
 -->
 <template>
   <div>关于本站：y-Terminal 极客范儿的浏览器主页</div>
-  <div>
+  <!-- <div>
     <a href="https://github.com/mengqiuleo/y-terminal" target="_blank">
       代码开源，欢迎 star 和贡献~
     </a>
-  </div>
+  </div> -->
   <div></div>
   <div>
     作者：

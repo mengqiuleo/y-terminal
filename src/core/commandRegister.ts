@@ -1,14 +1,14 @@
 /*
  * @Author: Pan Jingyi
  * @Date: 2022-09-25 23:37:05
- * @LastEditTime: 2022-11-02 22:33:48
+ * @LastEditTime: 2022-11-03 22:43:32
  */
 import { CommandType } from './command'
 import clearCommand from './commands/terminal/clearCommand'
 import historyCommand from './commands/terminal/historyCommand'
 import backgroundCommand from './commands/terminal/config/backgroundCommand'
 import resetCommand from './commands/terminal/config/resetCommand'
-import fanyiCommand from './commands/fanyi/fanyiCommand'
+// import fanyiCommand from './commands/fanyi/fanyiCommand'
 import helpCommand from './commands/terminal/help/helpCommand'
 import infoCommand from './commands/terminal/info/infoCommand'
 import hintCommand from './commands/terminal/config/hintCommand'
@@ -32,27 +32,27 @@ import articleCommand from './commands/article/articleCommand'
  */
 const commandList: CommandType[] = [
   shortcutCommand,
-  hotCommand,
   clearCommand,
   historyCommand,
-  fanyiCommand,
+  resetCommand,
+  hintCommand,
+  // fanyiCommand,
   helpCommand,
   infoCommand,
+  gotoCommand,
+  dateCommand,
+  weatherCommand,
+  articleCommand,
+  hotCommand,
   musicCommand,
   moyuCommand,
   backgroundCommand,
-  resetCommand,
-  hintCommand,
   baiduCommand,
+  juejinCommand,
+  csdnCommand,
   githubCommand,
   googleCommand,
   zhihuCommand,
-  gotoCommand,
-  dateCommand,
-  juejinCommand,
-  csdnCommand,
-  weatherCommand,
-  articleCommand
 ]
 
 /**

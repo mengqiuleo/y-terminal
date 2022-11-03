@@ -6,6 +6,8 @@
   >
     <!-- 上面的handleClickWrapper是文本聚焦，不是换壁纸 -->
     <div ref="terminalRef" class="yi-terminal" :style="mainStyle">
+      <!-- 可折叠：是输出框 -->
+      <!-- activeKeys: 是否展开 -->
       <a-collapse
         v-model:activeKey="activeKeys"
         :bordered="false"
@@ -95,7 +97,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, StyleValue, toRefs, watchEffect } from 'vue'
 
-import CommandOutputType = YiTerminal.CommandOutputType //command命令类型输出(只是command这种类型输出)
+import CommandOutputType = YiTerminal.CommandOutputType //记录我们已经输入的命令类型，要不然我们怎么获取历史命令呢
 import OutputType = YiTerminal.OutputType //输出类型
 import CommandInputType = YiTerminal.CommandInputType //命令输入类型
 import { registerShortcuts } from './shortcuts' //快捷键
@@ -128,7 +130,7 @@ const props = withDefaults(defineProps<YiTerminalProps>(), {
 const { user } = toRefs(props)
 
 const terminalRef = ref() //代表整个终端的ref
-const activeKeys = ref<number[]>([])
+const activeKeys = ref<number[]>([]) //是否折叠
 // 输出列表,是我们要进行遍历输出的列表
 const outputList = ref<OutputType[]>([])
 // 命令列表：记录已输入的命令，要不然我们怎么获取历史命令呢
@@ -143,12 +145,12 @@ const isRunning = ref(false)
 const configStore = useTerminalConfigStore()
 
 /**
- * 初始命令
+ * 初始命令：就是我们输入框的初始化内容
  * 为什么要初始命令？我们要进行双向数据绑定，所以最开始的时候需要一个初始值
  */
 const initCommand: CommandInputType = {
   text: '',
-  placeholder: ''
+  placeholder: '请输入命令'
 }
 
 /**
@@ -157,13 +159,14 @@ const initCommand: CommandInputType = {
  * 也就是说，我们输入啥，inputCommand里面就是啥
  * 因为我们双向数据绑定的值是initCommand的值，所以我们给它包装一下类型，
  * 将它变成代输入的命令inputCommand
+ * 这里之所以里面有initCommand，是因为：initCommand是我们的初始的内容，可能有可能没有，所以我们保险还是拿到值吧
  */
 const inputCommand = ref<CommandInputType>({
   ...initCommand
 })
 
 // 这里是测试我们输入的内容是否可以被监听到，text的值就是我们输入的东西 inputCommand.value.text
-console.log(inputCommand.value)
+// console.log(inputCommand.value)
 
 /**
  * 全局记录当前命令，便于写入结果
@@ -172,11 +175,11 @@ console.log(inputCommand.value)
 let currentNewCommand: CommandOutputType
 
 const {
-  commandHistoryPos,
+  commandHistoryPos, //当前命令的位置
   showPrevCommand,
   showNextCommand,
-  listCommandHistory
-} = useHistory(commandList.value, inputCommand)
+  listCommandHistory //历史命令列表
+} = useHistory(commandList.value, inputCommand) //commandList首次为空
 
 const { hint, setHint, debounceSetHint } = useHint()
 
@@ -184,16 +187,17 @@ const { hint, setHint, debounceSetHint } = useHint()
 
 /**
  * 提交命令（回车）
+ * 当我们按下enter键时会触发
  */
 const doSubmitCommand = async () => {
   isRunning.value = true
   // 既然在执行命令，那就不要在输出命令提示了，所以输入空字符串，setHint函数输出的就是命令提示
-  setHint('')
+  setHint('') //setHint方法是从useHint()中取出来的，即从./hint.ts文件中取出
   let inputText = inputCommand.value.text //拿到命令输入的内容
   // 使用！执行某条历史命令（这里是一个小的功能）
   if (inputText.startsWith('!')) {
-    const commandIndex = Number(inputText.substring(1))
-    const command = commandList.value[commandIndex - 1]
+    const commandIndex = Number(inputText.substring(1)) //命令序号
+    const command = commandList.value[commandIndex - 1] //根据命令序号，算出命令
     if (command) {
       inputText = command.text
     }
@@ -380,7 +384,7 @@ const isInputFocused = () => {
   )
 }
 /**
- * 设置输入框的值
+ * 设置输入框的值：可以实现命令提示补全
  */
 const setTabCompletion = () => {
   if (hint.value) {
@@ -440,8 +444,8 @@ onMounted(() => {
     })
   } else {
     terminal.writeTextOutput(
-      `Welcome to y-Terminal, coolest browser index for geeks!` +
-        `<a href="//github.com/mengqiuleo/y-terminal" target='_blank'> GitHub Open Source</a>`
+      `Welcome to y-Terminal, coolest browser index for geeks!`
+        // `<a href="//github.com/mengqiuleo/y-terminal" target='_blank'> GitHub Open Source</a>`
     )
     terminal.writeTextOutput(
       `Author <a href="//blog.csdn.net/weixin_52834435?type=blog" target="_blank">coder_xiaoy</a>` +

@@ -83,7 +83,7 @@ export const shortcutList: ShortcutType[] = [
     action(e, terminal) {
       e.preventDefault()
       if (terminal.isInputFocused()) {
-        terminal.setTabCompletion()
+        terminal.setTabCompletion() //命令提示补全，具体方法在子组件中定义了
       } else {
         terminal.focusInput()
       }
