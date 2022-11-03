@@ -445,7 +445,7 @@ onMounted(() => {
   } else {
     terminal.writeTextOutput(
       `Welcome to y-Terminal, coolest browser index for geeks!`
-        // `<a href="//github.com/mengqiuleo/y-terminal" target='_blank'> GitHub Open Source</a>`
+      // `<a href="//github.com/mengqiuleo/y-terminal" target='_blank'> GitHub Open Source</a>`
     )
     terminal.writeTextOutput(
       `Author <a href="//blog.csdn.net/weixin_52834435?type=blog" target="_blank">coder_xiaoy</a>` +

@@ -52,7 +52,7 @@ const commandList: CommandType[] = [
   csdnCommand,
   githubCommand,
   googleCommand,
-  zhihuCommand,
+  zhihuCommand
 ]
 
 /**
