@@ -1,14 +1,14 @@
 {
-  "name": "yuindex-server",
+  "name": "pjyindex-server",
   "version": "0.0.1",
-  "description": "yuindex-server",
+  "description": "pjyindex-server",
   "main": "src/index.js",
   "scripts": {
     "start:dev": "cross-env NODE_ENV=local node src/index.js ",
     "start": "cross-env NODE_ENV=prod node src/index.js",
     "test": "npm test"
   },
-  "author": "yupi",
+  "author": "pjy",
   "dependencies": {
     "NeteaseCloudMusicApi": "^4.6.7",
     "axios": "^0.27.2",
