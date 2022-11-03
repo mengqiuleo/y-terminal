@@ -13,30 +13,36 @@
         {{ weatherMessage.weather_list[0].date }}
         {{ getWeek(weatherMessage.weather_list[0].week) }} |
         {{ weatherMessage.weather_list[0].dayweather }}
-        {{ weatherMessage.weather_list[0].daytemp }}℃/{{ weatherMessage.weather_list[0].nighttemp }}℃ | 风力&风向：
-        {{ weatherMessage.weather_list[0].daywind }}风
+        {{ weatherMessage.weather_list[0].daytemp }}℃/{{
+          weatherMessage.weather_list[0].nighttemp
+        }}℃ | 风力&风向： {{ weatherMessage.weather_list[0].daywind }}风
         {{ weatherMessage.weather_list[0].daypower }}
       </div>
       <!-- 后三天 -->
-      <div  class="future-weather" >
-        <div v-for="(item,index) in weatherMessage.weather_list">
-          <div  v-if="index > 0"  class="future-item">
-              <div class="item">
-                {{ weatherMessage.weather_list[index].date.slice(5) }}
-              </div>
-              <div class="item">
-                {{ getWeek(weatherMessage.weather_list[index].week) }}
-              </div>
-              <div class="item">{{ weatherMessage.weather_list[index].daytemp }}℃/{{ weatherMessage.weather_list[index].nighttemp }}℃</div>
-              <div class="item">{{ weatherMessage.weather_list[`0`].dayweather }}</div>
-              <div class="item">
-                {{ weatherMessage.weather_list[`0`].daywind }}风
-                {{ weatherMessage.weather_list[`0`].daypower }}
-              </div>
+      <div class="future-weather">
+        <div v-for="(item, index) in weatherMessage.weather_list">
+          <div v-if="index > 0" class="future-item">
+            <div class="item">
+              {{ weatherMessage.weather_list[index].date.slice(5) }}
+            </div>
+            <div class="item">
+              {{ getWeek(weatherMessage.weather_list[index].week) }}
+            </div>
+            <div class="item">
+              {{ weatherMessage.weather_list[index].daytemp }}℃/{{
+                weatherMessage.weather_list[index].nighttemp
+              }}℃
+            </div>
+            <div class="item">
+              {{ weatherMessage.weather_list[`0`].dayweather }}
+            </div>
+            <div class="item">
+              {{ weatherMessage.weather_list[`0`].daywind }}风
+              {{ weatherMessage.weather_list[`0`].daypower }}
+            </div>
           </div>
         </div>
       </div>
-
     </div>
 
     <!-- 报错提示 -->
@@ -45,11 +51,17 @@
 </template>
 
 <script setup lang="ts">
-import { toRefs, ref, onMounted, withDefaults, defineProps, reactive } from 'vue'
+import {
+  toRefs,
+  ref,
+  onMounted,
+  withDefaults,
+  defineProps,
+  reactive
+} from 'vue'
 import { getWeather } from './weatherApi'
 import { Weather, WeatherInfo } from './TWeather'
 // import weatherTemp from './weatherTemp.vue'
-
 
 interface WeatherBoxProps {
   city: string
@@ -57,32 +69,32 @@ interface WeatherBoxProps {
 
 const props = withDefaults(defineProps<WeatherBoxProps>(), { city: '深圳' })
 const errorHint = ref('')
-const  weatherMessage = reactive<WeatherInfo>({
+const weatherMessage = reactive<WeatherInfo>({
   weather_list: [
     {
-      date: "xxx",
-      daypower: "<3",
-      nightpower: "<3",
-      daytemp: "31",
-      nighttemp: "26",
-      dayweather: "多云",
-      nightweather: "多云",
-      daywind: "东",
-      nightwind: "东",
-      week: "4"
+      date: 'xxx',
+      daypower: '<3',
+      nightpower: '<3',
+      daytemp: '31',
+      nighttemp: '26',
+      dayweather: '多云',
+      nightweather: '多云',
+      daywind: '东',
+      nightwind: '东',
+      week: '4'
     }
   ]
 })
 
 const getWeek = (number: any) => {
-  let weeks = ['', '周一', '周二', '周三', '周四', '周五', '周六', '周日'];
-  return weeks[number];
+  let weeks = ['', '周一', '周二', '周三', '周四', '周五', '周六', '周日']
+  return weeks[number]
 }
 
 async function getWeatherData() {
-  const res: any= await getWeather(props.city)
+  const res: any = await getWeather(props.city)
   if (res) {
-    weatherMessage.weather_list= res.data
+    weatherMessage.weather_list = res.data
     console.log(weatherMessage.weather_list[0].date)
     // weather = reactive(weatherMessage);
     // const weather = reactive(weatherMessage)
@@ -94,8 +106,6 @@ async function getWeatherData() {
 onMounted(() => {
   getWeatherData()
 })
-
-
 </script>
 <style scoped>
 .future-weather {
@@ -105,7 +115,7 @@ onMounted(() => {
 }
 .future-item {
   flex: 1;
-  margin-right:15px;
+  margin-right: 15px;
   margin-top: 3px;
   margin-bottom: 3px;
   line-height: 30px;

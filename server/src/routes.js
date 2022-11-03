@@ -1,7 +1,7 @@
 /*
  * @Author: Pan Jingyi
  * @Date: 2022-09-25 20:48:53
- * @LastEditTime: 2022-09-27 17:48:47
+ * @LastEditTime: 2022-11-02 22:50:37
  */
 /**
  * 接口路由
@@ -43,6 +43,10 @@ const routes = [
   {
     path: '/weather',
     handler: require('./controller/weatherController').getWeatherApi
+  },
+  {
+    path: '/article',
+    handler: require('./controller/articleController').getArticleApi
   }
 ]
 
