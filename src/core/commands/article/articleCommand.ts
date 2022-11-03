@@ -1,7 +1,7 @@
 /*
  * @Author: Pan Jingyi
  * @Date: 2022-11-02 21:55:30
- * @LastEditTime: 2022-11-02 22:34:29
+ * @LastEditTime: 2022-11-03 10:10:40
  */
 import { CommandType } from '../../command'
 import { defineAsyncComponent } from 'vue'
@@ -11,17 +11,11 @@ import ComponentOutputType = YiTerminal.ComponentOutputType
  * 返回随机文章
  *
  */
- const weatherCommand: CommandType = {
+const weatherCommand: CommandType = {
   func: 'article',
   name: '掘金文章',
   desc: '随机文章',
-  params: [
-    {
-      key: 'number',
-      desc: '文章篇数（默认20篇）',
-      required: false
-    }
-  ],
+  params: [],
   options: [],
   collapsible: true,
   action(options, terminal) {

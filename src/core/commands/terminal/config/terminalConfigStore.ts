@@ -1,7 +1,7 @@
 /*
  * @Author: Pan Jingyi
  * @Date: 2022-09-25 23:46:11
- * @LastEditTime: 2022-09-26 18:02:34
+ * @LastEditTime: 2022-11-03 14:45:42
  */
 import { defineStore } from 'pinia'
 
@@ -10,6 +10,7 @@ import { defineStore } from 'pinia'
  *
  * @author pjy
  */
+
 // 这里我们在本地localStorage的存储名称就叫terminalConfig，不过电脑会帮我们改成小写
 export const useTerminalConfigStore = defineStore('terminalConfig', {
   state: () => ({
