@@ -1,3 +1,4 @@
 vite-env.d.ts
 commitlint.config.js
 /server/*
+/dist

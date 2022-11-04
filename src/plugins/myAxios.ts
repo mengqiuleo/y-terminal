@@ -1,3 +1,8 @@
+/*
+ * @Author: Pan Jingyi
+ * @Date: 2022-09-25 20:41:58
+ * @LastEditTime: 2022-11-04 10:36:05
+ */
 import axios from 'axios'
 
 // 自定义 axios 实例
@@ -5,10 +10,12 @@ const myAxios = axios.create({
   baseURL:
     // @ts-ignore
     process.env.NODE_ENV === 'production'
-      ? 'https://yuindex-server-974538-1256524210.ap-shanghai.run.tcloudbase.com/api'
-      : 'http://localhost:7345/api'
+      ? 'https://test.panjingyi.top/api'
+      : 'https://test.panjingyi.top/api'
 })
 
+//鱼皮的服务器：https://yuindex-server-974538-1256524210.ap-shanghai.run.tcloudbase.com/api
+//http://106.14.187.205:7345/api
 myAxios.defaults.withCredentials = true
 
 // 添加请求拦截器
