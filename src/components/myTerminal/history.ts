@@ -36,6 +36,7 @@ const useHistory = (
     }
   }
 
+  // 其实这里没啥难懂的，就是直接是有个指针，然后有个命令数组，然后我们每次移动指针，相当于索引，然后拿到数组中对应索引的text
   const showPrevCommand = () => {
     console.log(commandHistoryPos.value, commandList, inputCommand)
     if (commandHistoryPos.value >= 1) {

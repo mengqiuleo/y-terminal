@@ -54,6 +54,7 @@ const useHint = () => {
   /**
    * 输入提示防抖
    */
+  // 我们是调用了lodash的debounce
   const debounceSetHint = _.debounce(function (inputText: string) {
     setHint(inputText)
   }, 250)

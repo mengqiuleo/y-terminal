@@ -5,15 +5,15 @@
     @click="handleClickWrapper"
   >
     <!-- 上面的handleClickWrapper是文本聚焦，不是换壁纸 -->
+    <!-- 这个大的div就是把输出，输入，提示全都包进来了 -->
     <div ref="terminalRef" class="yi-terminal" :style="mainStyle">
       <!-- 可折叠：是输出框 -->
-      <!-- activeKeys: 是否展开 -->
+      <!-- activeKeys: 是否展开； 折叠图标放在右边-->
       <a-collapse
         v-model:activeKey="activeKeys"
         :bordered="false"
         expand-icon-position="right"
       >
-        <!-- 折叠图标放在右边 -->
         <template v-for="(output, index) in outputList" :key="index">
           <!-- 折叠 -->
           <a-collapse-panel
@@ -21,7 +21,7 @@
             :key="index"
             class="terminal-row"
           >
-            <!-- 这个header就是[local]$ + 你以前输入的某个命令 -->
+            <!-- 这个header就是[local]$ + 你以前输入的某个命令，因为我们需要回显所有以前输入和输出的东西 -->
             <template #header>
               <!-- prompt 是 [local]$ -->
               <span style="user-select: none; margin-right: 10px">

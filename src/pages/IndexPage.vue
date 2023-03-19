@@ -9,6 +9,7 @@
     full-screen
     :on-submit-command="onSubmitCommand"
   />
+  <!-- on-submit-command：这个是我们自定义组件需要收到的属性，不用过多纠结这个属性是哪里来的：是我们自定义的，不是原生的 -->
 </template>
 <!-- 这里引用子组件: my-terminal, 但是没有明显的引入,不知道咋引入的。onSubmitCommand属性是必传，子组件的props可以从118行（子组件）看见  -->
 
