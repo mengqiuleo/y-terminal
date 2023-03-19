@@ -46,7 +46,6 @@ help 回车，显示所有支持的命令
   <img style="display:inline;margin-left:10px" src="https://img.shields.io/npm/dt/y-command" />
 
 <br/>
-<br/>
 
 **在线文档**: https://y-command-doc.vercel.app
 
@@ -218,7 +217,7 @@ help 回车，显示所有支持的命令
 
 ### 命令集
 
-一组可用命令的集合（类似插件），通过 TS 明确命令的定义，支持配置别名、选项、子命令等，便于开发者扩展和定制。
+一组可用命令的集合（类似插件），通过 TS 明确命令的定义，支持配置别名、选项等，便于开发者扩展和定制。
 
 核心命令包括：
 
@@ -241,5 +240,3 @@ help 回车，显示所有支持的命令
 ## 致谢
 
 摸鱼命令的实现依赖于 https://haiyong.site/moyu ，感谢大佬的开源分享。
-
-

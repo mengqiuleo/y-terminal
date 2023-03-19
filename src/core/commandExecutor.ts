@@ -98,8 +98,30 @@ const doParse = (
       options.default[key] = defaultValue
     }
   })
+  console.log('args', args) // ['vue', '-p']
+  console.log('options', options)
+  /**
+   * {
+   *   alias: {
+   *      picture: ['p']
+   *      self: ['s']
+   *   },
+   *   boolean: ['self', 'picture']
+   *   default: {}
+   *   string: []
+   * }
+   */
   const parsedOptions = getopts(args, options)
   console.log('解析参数，parsedOptions = ', parsedOptions)
+  /**
+    {
+      p: true
+      picture: true
+      s: false
+      self: false
+      _: ['vue']
+    }
+   */
   return parsedOptions
 }
 
