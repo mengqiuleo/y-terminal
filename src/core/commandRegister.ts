@@ -13,7 +13,7 @@ import helpCommand from './commands/terminal/help/helpCommand'
 import infoCommand from './commands/terminal/info/infoCommand'
 import hintCommand from './commands/terminal/config/hintCommand'
 import musicCommand from './commands/relax/music/musicCommand'
-import moyuCommand from './commands/relax/moyu/moyuCommand'
+// import moyuCommand from './commands/relax/moyu/moyuCommand'
 import shortcutCommand from './commands/terminal/shortcut/shortcutCommand'
 import hotCommand from './commands/hot/hotCommand'
 import baiduCommand from './commands/search/baiduCommand'
@@ -26,7 +26,9 @@ import juejinCommand from './commands/search/juejinCommand'
 import csdnCommand from './commands/search/csdnCommand'
 import weatherCommand from './commands/weather/weatherCommand'
 import articleCommand from './commands/article/articleCommand'
-
+import { emojiCommand } from 'y-command/lib'
+import { timeCommand } from 'y-command/lib'
+import { moyuCommand } from 'y-command/lib'
 /**
  * 命令列表（数组元素顺序会影响 help 命令的展示顺序）
  */
@@ -52,7 +54,9 @@ const commandList: CommandType[] = [
   csdnCommand,
   githubCommand,
   googleCommand,
-  zhihuCommand
+  zhihuCommand,
+  emojiCommand,
+  timeCommand
 ]
 
 /**
